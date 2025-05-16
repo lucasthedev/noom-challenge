@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/challenge-noom.iml" filepath="$PROJECT_DIR$/.idea/challenge-noom.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sleep.main.iml" filepath="$PROJECT_DIR$/.idea/modules/sleep.main.iml" />
     </modules>
   </component>
 </project>

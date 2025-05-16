@@ -1,0 +1,1 @@
+CREATE TYPE morning_feel AS ENUM ('BAD', 'OK', 'GOOD');
