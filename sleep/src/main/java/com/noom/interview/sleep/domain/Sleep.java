@@ -16,9 +16,6 @@ public class Sleep {
     private Instant createdAt;
     private Instant updatedAt;
 
-    private final static int BAD_MINUTES = 300;
-    private final static int OK_MINUTES = 360;
-
     public Sleep(String id, LocalDate date, LocalDateTime timeInBedStart, LocalDateTime timeInBedEnd,
                  Duration totalTimeInBed, SleepFeeling feeling, Instant createdAt, Instant updatedAt) {
         this.id = id;

@@ -1,6 +1,6 @@
 package com.noom.interview.sleep.usecase;
 
-import com.noom.interview.sleep.repository.SleepIntervalRepository;
+import com.noom.interview.sleep.repository.SleepFetchingAveragesRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,26 +12,26 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class FetchSleepRangeUseCaseTest {
-    private SleepIntervalRepository repository;
-    private FetchSleepRangeUseCase useCase;
+public class FetchSleepAveragesUseCaseTest {
+    private SleepFetchingAveragesRepository repository;
+    private FetchSleepAveragesUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        repository = mock(SleepIntervalRepository.class);
-        useCase = new FetchSleepRangeUseCase(repository);
+        repository = mock(SleepFetchingAveragesRepository.class);
+        useCase = new FetchSleepAveragesUseCase(repository);
     }
 
     @Test
     void shouldReturnIntervalWhenExists() {
-        var interval = new SleepIntervalRepository.Data(
+        var interval = new SleepFetchingAveragesRepository.Data(
                 LocalDate.now().minusDays(10),
                 LocalDate.now(),
                 100L,
                 LocalTime.now(),
                 LocalTime.now()
         );
-        when(repository.getSleepDateInterval()).thenReturn(Optional.of(interval));
+        when(repository.getSleepAverages()).thenReturn(Optional.of(interval));
 
         var result = useCase.execute();
 
@@ -42,7 +42,7 @@ public class FetchSleepRangeUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenDotNotExists() {
-        when(repository.getSleepDateInterval()).thenReturn(Optional.empty());
+        when(repository.getSleepAverages()).thenReturn(Optional.empty());
 
         RuntimeException ex = assertThrows(RuntimeException.class, () -> useCase.execute());
         assertEquals("No sleep data found in the last 30 days", ex.getMessage());
