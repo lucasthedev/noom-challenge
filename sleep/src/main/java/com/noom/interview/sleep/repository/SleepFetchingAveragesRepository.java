@@ -9,15 +9,15 @@ import java.time.LocalTime;
 import java.util.Optional;
 
 @Repository
-public class SleepIntervalRepository {
+public class SleepFetchingAveragesRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public SleepIntervalRepository(JdbcTemplate jdbcTemplate) {
+    public SleepFetchingAveragesRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Optional<Data> getSleepDateInterval() {
+    public Optional<Data> getSleepAverages() {
 
         String sql = AverageQuery.AVERAGE_QUERY;
 

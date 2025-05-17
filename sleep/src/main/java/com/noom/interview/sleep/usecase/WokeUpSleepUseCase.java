@@ -2,7 +2,6 @@ package com.noom.interview.sleep.usecase;
 
 import com.noom.interview.sleep.domain.Sleep;
 import com.noom.interview.sleep.enums.SleepFeeling;
-import com.noom.interview.sleep.exceptions.SleepRecordNoutFoundException;
 import com.noom.interview.sleep.exceptions.WokeUpSleepException;
 import com.noom.interview.sleep.repository.SleepRepository;
 import org.springframework.stereotype.Service;
