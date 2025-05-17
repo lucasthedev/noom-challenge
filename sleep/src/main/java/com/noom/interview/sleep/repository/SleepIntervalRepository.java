@@ -7,11 +7,11 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Repository
-public class SleepRetrieveRangeRepository {
+public class SleepIntervalRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public SleepRetrieveRangeRepository(JdbcTemplate jdbcTemplate) {
+    public SleepIntervalRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

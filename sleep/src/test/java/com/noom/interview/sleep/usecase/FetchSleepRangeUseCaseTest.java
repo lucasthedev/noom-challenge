@@ -1,6 +1,6 @@
 package com.noom.interview.sleep.usecase;
 
-import com.noom.interview.sleep.repository.SleepRetrieveRangeRepository;
+import com.noom.interview.sleep.repository.SleepIntervalRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,18 +12,18 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class FetchSleepRangeUseCaseTest {
-    private SleepRetrieveRangeRepository repository;
+    private SleepIntervalRepository repository;
     private FetchSleepRangeUseCase useCase;
 
     @BeforeEach
     void setUp() {
-        repository = mock(SleepRetrieveRangeRepository.class);
+        repository = mock(SleepIntervalRepository.class);
         useCase = new FetchSleepRangeUseCase(repository);
     }
 
     @Test
     void shouldReturnIntervalWhenExists() {
-        var interval = new SleepRetrieveRangeRepository.DateInterval(
+        var interval = new SleepIntervalRepository.DateInterval(
                 LocalDate.now().minusDays(10), LocalDate.now()
         );
         when(repository.getSleepDateInterval()).thenReturn(Optional.of(interval));

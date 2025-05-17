@@ -2,7 +2,7 @@ package com.noom.interview.sleep.api.controllers;
 
 import com.noom.interview.sleep.api.request.WokeUpSleepRequest;
 import com.noom.interview.sleep.api.response.SleepRangeResponse;
-import com.noom.interview.sleep.repository.SleepRetrieveRangeRepository;
+import com.noom.interview.sleep.repository.SleepIntervalRepository;
 import com.noom.interview.sleep.usecase.CreateSleepUseCase;
 import com.noom.interview.sleep.usecase.FetchSleepRangeUseCase;
 import com.noom.interview.sleep.usecase.WokeUpSleepUseCase;
@@ -38,7 +38,7 @@ public class SleepController {
 
     @GetMapping("/sleep-range")
     public ResponseEntity<SleepRangeResponse> getSleepRange() {
-        SleepRetrieveRangeRepository.DateInterval dateInterval = fetchSleepRangeUseCase.execute();
+        SleepIntervalRepository.DateInterval dateInterval = fetchSleepRangeUseCase.execute();
         SleepRangeResponse sleepRangeResponse = new SleepRangeResponse(dateInterval.getStart(), dateInterval.getEnd());
         return ResponseEntity.ok(sleepRangeResponse);
     }
