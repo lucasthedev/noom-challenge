@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,13 +33,17 @@ public class SleepIntervalRepositoryTest {
         LocalDate minDate = LocalDate.now().minusDays(10);
         LocalDate maxDate = LocalDate.now();
 
-        when(jdbcTemplate.query(anyString(), (ResultSetExtractor<Object>) any())).thenReturn(Optional.of(new SleepIntervalRepository.DateInterval(minDate, maxDate)));
+        when(jdbcTemplate.query(anyString(), (ResultSetExtractor<Object>) any()))
+                .thenReturn(Optional.of(new SleepIntervalRepository.Data(minDate, maxDate,
+                        100L,
+                        LocalTime.now(),
+                        LocalTime.now())));
 
-        Optional<SleepIntervalRepository.DateInterval> result = repository.getSleepDateInterval();
+        Optional<SleepIntervalRepository.Data> result = repository.getSleepDateInterval();
 
         assertTrue(result.isPresent());
-        assertEquals(minDate, result.get().getStart());
-        assertEquals(maxDate, result.get().getEnd());
+        assertEquals(minDate, result.get().getStartDate());
+        assertEquals(maxDate, result.get().getEndDate());
     }
 
 }

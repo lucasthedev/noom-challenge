@@ -51,7 +51,7 @@ public class SleepRepositoryTest {
     }
 
     @Test
-    void getSleepById() {
+    void getSleepById() throws Exception {
         Sleep expectedSleep = new Sleep("1", LocalDate.now(),
                 LocalDateTime.of(2025,3,10,4,30),
                 LocalDateTime.of(2025,3,10,4,30),

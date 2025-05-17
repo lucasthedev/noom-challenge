@@ -12,7 +12,7 @@ public class FetchSleepRangeUseCase {
         this.sleepIntervalRepository = sleepIntervalRepository;
     }
 
-    public SleepIntervalRepository.DateInterval execute() {
+    public SleepIntervalRepository.Data execute() {
         return sleepIntervalRepository.getSleepDateInterval()
                 .orElseThrow(() -> new SleepRangeNotFoundException("No sleep data found in the last 30 days"));
     }

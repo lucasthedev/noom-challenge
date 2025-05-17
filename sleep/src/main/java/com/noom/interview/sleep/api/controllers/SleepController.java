@@ -6,6 +6,8 @@ import com.noom.interview.sleep.repository.SleepIntervalRepository;
 import com.noom.interview.sleep.usecase.CreateSleepUseCase;
 import com.noom.interview.sleep.usecase.FetchSleepRangeUseCase;
 import com.noom.interview.sleep.usecase.WokeUpSleepUseCase;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,23 +26,33 @@ public class SleepController {
         this.fetchSleepRangeUseCase = fetchSleepRangeUseCase;
     }
 
-    @PostMapping("/register-sleep")
-    public ResponseEntity<String> saveSleep(){
+    @PostMapping(value = "/register-sleep",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> saveSleep(){
         String id = createSleepUseCase.execute();
-        return ResponseEntity.ok(id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 
-    @PatchMapping("/woke-up-sleep/{id}")
-    public ResponseEntity<String> wokeUpSleep(@PathVariable String id, @RequestBody WokeUpSleepRequest request){
+    @PatchMapping(value = "/woke-up-sleep/{id}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> wokeUpSleep(@PathVariable String id, @RequestBody WokeUpSleepRequest request){
         String sleepId = wokeUpSleepUseCase.execute(id, request.getMorningFeeling());
-        return ResponseEntity.ok(sleepId);
+        return ResponseEntity.status(HttpStatus.OK).body(sleepId);
     }
 
-    @GetMapping("/sleep-range")
-    public ResponseEntity<SleepRangeResponse> getSleepRange() {
-        SleepIntervalRepository.DateInterval dateInterval = fetchSleepRangeUseCase.execute();
-        SleepRangeResponse sleepRangeResponse = new SleepRangeResponse(dateInterval.getStart(), dateInterval.getEnd());
-        return ResponseEntity.ok(sleepRangeResponse);
+    @GetMapping(value = "/sleep-averages",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> getSleepRange() {
+        SleepIntervalRepository.Data dateInterval = fetchSleepRangeUseCase.execute();
+
+        SleepRangeResponse sleepRangeResponse = new SleepRangeResponse(dateInterval.getStartDate(),
+                dateInterval.getEndDate(),
+                dateInterval.getAvgTimeInBedHours(),
+                dateInterval.getAvgBedTime(),
+                dateInterval.getAvgWakeUpTime());
+
+        return ResponseEntity.status(HttpStatus.OK).body(sleepRangeResponse);
     }
 
 }

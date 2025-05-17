@@ -20,7 +20,7 @@ public class WokeUpSleepUseCaseTest {
     }
 
     @Test
-    void shouldUpdateMorningFeelingWithSuccess() {
+    void shouldUpdateMorningFeelingWithSuccess() throws Exception {
         Sleep sleep = new Sleep();
         Mockito.when(sleepRepository.getSleep("123")).thenReturn(sleep);
         Mockito.when(sleepRepository.updateSleep(Mockito.any())).thenReturn("123");
@@ -32,7 +32,7 @@ public class WokeUpSleepUseCaseTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenSleepNotFound() {
+    void shouldThrowExceptionWhenSleepNotFound() throws Exception {
         Mockito.when(sleepRepository.getSleep("notfound")).thenReturn(null);
 
         Assertions.assertThrows(WokeUpSleepException.class, () ->
@@ -41,7 +41,7 @@ public class WokeUpSleepUseCaseTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenMorningFeelingIsInvalid() {
+    void shouldThrowExceptionWhenMorningFeelingIsInvalid() throws Exception {
         Sleep sleep = new Sleep();
         Mockito.when(sleepRepository.getSleep("123")).thenReturn(sleep);
 
