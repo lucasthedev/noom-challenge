@@ -2,18 +2,16 @@ package com.noom.interview.sleep.domain;
 
 import com.noom.interview.sleep.enums.SleepFeeling;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.UUID;
 
 
 public class Sleep {
     private String id;
     private LocalDate date;
-    private LocalTime timeInBedStart;
-    private LocalTime timeInBedEnd;
-    private LocalTime totalTimeInBed;
+    private LocalDateTime timeInBedStart;
+    private LocalDateTime timeInBedEnd;
+    private Duration totalTimeInBed;
     private SleepFeeling feeling;
     private Instant createdAt;
     private Instant updatedAt;
@@ -21,8 +19,8 @@ public class Sleep {
     private final static int BAD_MINUTES = 300;
     private final static int OK_MINUTES = 360;
 
-    public Sleep(String id, LocalDate date, LocalTime timeInBedStart, LocalTime timeInBedEnd,
-                 LocalTime totalTimeInBed, SleepFeeling feeling, Instant createdAt, Instant updatedAt) {
+    public Sleep(String id, LocalDate date, LocalDateTime timeInBedStart, LocalDateTime timeInBedEnd,
+                 Duration totalTimeInBed, SleepFeeling feeling, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.date = date;
         this.timeInBedStart = timeInBedStart;
@@ -37,7 +35,7 @@ public class Sleep {
         final var id = UUID.randomUUID().toString();
         final var now = Instant.now();
         final var currentDate = LocalDate.now();
-        final var startTimeInBed = LocalTime.now();
+        final var startTimeInBed = LocalDateTime.now();
 
         this.id = id;
         this.date = currentDate;
@@ -46,30 +44,13 @@ public class Sleep {
         this.totalTimeInBed = null;
         this.feeling = null;
         this.createdAt = now;
-        this.updatedAt = null;
+        this.updatedAt = now;
     }
 
     public void updateSleep(Sleep sleep) {
-        this.timeInBedEnd = LocalTime.now();
-        this.totalTimeInBed = sleep.getTimeInBedEnd().minusHours(timeInBedStart.getHour())
-                .minusMinutes(timeInBedStart.getMinute());
-        this.feeling = setFeeling(sleep);
+        this.timeInBedEnd =  LocalDateTime.now();
+        this.totalTimeInBed = Duration.between(this.timeInBedStart, this.timeInBedEnd);
         this.updatedAt = Instant.now();
-    }
-
-    public static SleepFeeling setFeeling(Sleep sleep) {
-        if (sleep.getTotalTimeInBed() == null) {
-            return null;
-        }
-        int totalMinutes = sleep.getTotalTimeInBed().getHour() * 60 + sleep.getTotalTimeInBed().getMinute();
-
-        if (totalMinutes <= BAD_MINUTES) { // 5 horas ou menos
-            return SleepFeeling.BAD;
-        } else if (totalMinutes > BAD_MINUTES && totalMinutes <= OK_MINUTES) { // entre 5 e 6 horas
-            return SleepFeeling.OK;
-        } else { // mais de 6 horas
-            return SleepFeeling.GOOD;
-        }
     }
 
     public String getId() {
@@ -80,15 +61,15 @@ public class Sleep {
         return date;
     }
 
-    public LocalTime getTimeInBedStart() {
+    public LocalDateTime getTimeInBedStart() {
         return timeInBedStart;
     }
 
-    public LocalTime getTimeInBedEnd() {
+    public LocalDateTime getTimeInBedEnd() {
         return timeInBedEnd;
     }
 
-    public LocalTime getTotalTimeInBed() {
+    public Duration getTotalTimeInBed() {
         return totalTimeInBed;
     }
 
@@ -102,5 +83,9 @@ public class Sleep {
 
     public Instant getUpdatedAt() {
         return updatedAt;
+    }
+
+    public void setMorningFeeling(String morningFeeling) {
+        this.feeling = SleepFeeling.valueOf(morningFeeling.toUpperCase());
     }
 }

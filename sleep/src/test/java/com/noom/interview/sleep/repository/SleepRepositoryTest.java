@@ -6,9 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -40,8 +38,9 @@ public class SleepRepositoryTest {
 
     @Test
     void updateSleep() {
-        Sleep sleep = new Sleep("1", LocalDate.now(), LocalTime.of(22, 0), LocalTime.of(6, 0),
-                LocalTime.of(8, 0), SleepFeeling.GOOD, Instant.now(), Instant.now());
+        Sleep sleep = new Sleep("1", LocalDate.now(), LocalDateTime.of(2025,3,10,4,30),
+                LocalDateTime.of(2025,3,10,4,30),
+                Duration.ofMinutes(300), SleepFeeling.GOOD, Instant.now(), Instant.now());
 
         when(jdbcTemplate.update(anyString(), any(), any(), any(), any(), any())).thenReturn(1);
 
@@ -53,8 +52,10 @@ public class SleepRepositoryTest {
 
     @Test
     void getSleepById() {
-        Sleep expectedSleep = new Sleep("1", LocalDate.now(), LocalTime.of(22, 0), LocalTime.of(6, 0),
-                LocalTime.of(8, 0), SleepFeeling.GOOD, Instant.now(), Instant.now());
+        Sleep expectedSleep = new Sleep("1", LocalDate.now(),
+                LocalDateTime.of(2025,3,10,4,30),
+                LocalDateTime.of(2025,3,10,4,30),
+                Duration.ofMinutes(300), SleepFeeling.GOOD, Instant.now(), Instant.now());
 
         when(jdbcTemplate.queryForObject(anyString(), any(org.springframework.jdbc.core.RowMapper.class), any()))
                 .thenReturn(expectedSleep);

@@ -20,6 +20,5 @@ public class SleepTest {
         sleep.updateSleep(sleep);
 
         Assertions.assertNotNull(sleep.getTotalTimeInBed());
-        Assertions.assertNotNull(sleep.getFeeling());
     }
 }
