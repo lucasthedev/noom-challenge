@@ -2,6 +2,7 @@ package com.noom.interview.sleep.usecase;
 
 import com.noom.interview.sleep.domain.Sleep;
 import com.noom.interview.sleep.enums.SleepFeeling;
+import com.noom.interview.sleep.exceptions.SleepRecordNoutFoundException;
 import com.noom.interview.sleep.exceptions.WokeUpSleepException;
 import com.noom.interview.sleep.repository.SleepRepository;
 import org.springframework.stereotype.Service;
@@ -17,26 +18,29 @@ public class WokeUpSleepUseCase {
     }
 
     public String execute(String id, String morningFeeling) {
-        final Sleep sleep = sleepRepository.getSleep(id);
+        try {
+            final Sleep sleep = sleepRepository.getSleep(id);
 
-        if (sleep == null) {
+            Arrays.stream(SleepFeeling.values())
+                    .filter(sleepFeeling -> sleepFeeling.name().equalsIgnoreCase(morningFeeling))
+                    .findFirst()
+                    .ifPresentOrElse(
+                            sleepFeeling -> sleep.setMorningFeeling(sleepFeeling.name()),
+                            () -> {
+                                throw new WokeUpSleepException("Invalid morning feeling: " + morningFeeling);
+                            }
+                    );
+
+
+            sleep.setMorningFeeling(morningFeeling);
+            sleep.updateSleep(sleep);
+
+            return sleepRepository.updateSleep(sleep);
+        }
+        catch (Exception e){
             throw new WokeUpSleepException("Sleep not found with id: " + id);
         }
 
-        Arrays.stream(SleepFeeling.values())
-            .filter(sleepFeeling -> sleepFeeling.name().equalsIgnoreCase(morningFeeling))
-            .findFirst()
-            .ifPresentOrElse(
-                    sleepFeeling -> sleep.setMorningFeeling(sleepFeeling.name()),
-                    () -> {
-                        throw new WokeUpSleepException("Invalid morning feeling: " + morningFeeling);
-                    }
-            );
 
-
-        sleep.setMorningFeeling(morningFeeling);
-        sleep.updateSleep(sleep);
-
-        return sleepRepository.updateSleep(sleep);
     }
 }

@@ -53,7 +53,7 @@ public class SleepRepository {
         return sleep.getId();
     }
 
-    public Sleep getSleep(String id) {
+    public Sleep getSleep(String id) throws Exception {
         String sql = "SELECT * FROM sleep WHERE id = ?";
 
         return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,16 +24,20 @@ public class FetchSleepRangeUseCaseTest {
 
     @Test
     void shouldReturnIntervalWhenExists() {
-        var interval = new SleepIntervalRepository.DateInterval(
-                LocalDate.now().minusDays(10), LocalDate.now()
+        var interval = new SleepIntervalRepository.Data(
+                LocalDate.now().minusDays(10),
+                LocalDate.now(),
+                100L,
+                LocalTime.now(),
+                LocalTime.now()
         );
         when(repository.getSleepDateInterval()).thenReturn(Optional.of(interval));
 
         var result = useCase.execute();
 
         assertNotNull(result);
-        assertEquals(interval.getStart(), result.getStart());
-        assertEquals(interval.getEnd(), result.getEnd());
+        assertEquals(interval.getStartDate(), result.getStartDate());
+        assertEquals(interval.getEndDate(), result.getEndDate());
     }
 
     @Test
