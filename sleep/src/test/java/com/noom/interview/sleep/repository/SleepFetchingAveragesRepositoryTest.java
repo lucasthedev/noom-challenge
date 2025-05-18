@@ -17,15 +17,15 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SleepIntervalRepositoryTest {
+public class SleepFetchingAveragesRepositoryTest {
 
     private JdbcTemplate jdbcTemplate;
-    private SleepIntervalRepository repository;
+    private SleepFetchingAveragesRepository repository;
 
     @BeforeEach
     void setUp() {
         jdbcTemplate = mock(JdbcTemplate.class);
-        repository = new SleepIntervalRepository(jdbcTemplate);
+        repository = new SleepFetchingAveragesRepository(jdbcTemplate);
     }
 
     @Test
@@ -34,12 +34,12 @@ public class SleepIntervalRepositoryTest {
         LocalDate maxDate = LocalDate.now();
 
         when(jdbcTemplate.query(anyString(), (ResultSetExtractor<Object>) any()))
-                .thenReturn(Optional.of(new SleepIntervalRepository.Data(minDate, maxDate,
+                .thenReturn(Optional.of(new SleepFetchingAveragesRepository.Data(minDate, maxDate,
                         100L,
                         LocalTime.now(),
                         LocalTime.now())));
 
-        Optional<SleepIntervalRepository.Data> result = repository.getSleepDateInterval();
+        Optional<SleepFetchingAveragesRepository.Data> result = repository.getSleepAverages();
 
         assertTrue(result.isPresent());
         assertEquals(minDate, result.get().getStartDate());

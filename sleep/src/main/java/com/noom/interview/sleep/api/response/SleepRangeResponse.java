@@ -1,9 +1,11 @@
 package com.noom.interview.sleep.api.response;
 
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class SleepRangeResponse {
+
     private  LocalDate startDate;
     private LocalDate endDate;
     private final double avgTimeInBedHours;
@@ -21,9 +23,23 @@ public class SleepRangeResponse {
         this.avgWakeUpTime = avgWakeUpTime;
     }
 
-    public LocalDate getStartDate() { return startDate; }
-    public LocalDate getEndDate() { return endDate; }
-    public double getAverageTimeInBedHours() { return avgTimeInBedHours; }
-    public LocalTime getAverageStartBedTime() { return avgBedTime; }
-    public LocalTime getAverageWakeUpTime() { return avgWakeUpTime; }
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalTime getAvgWakeUpTime() {
+        return avgWakeUpTime;
+    }
+
+    public LocalTime getAvgBedTime() {
+        return avgBedTime;
+    }
+
+    public double getAvgTimeInBedHours() {
+        return avgTimeInBedHours;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
 }
