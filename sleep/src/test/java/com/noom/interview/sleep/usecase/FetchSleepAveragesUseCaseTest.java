@@ -27,9 +27,7 @@ public class FetchSleepAveragesUseCaseTest {
         var interval = new SleepFetchingAveragesRepository.Data(
                 LocalDate.now().minusDays(10),
                 LocalDate.now(),
-                100L,
-                LocalTime.now(),
-                LocalTime.now()
+                100L
         );
         when(repository.getSleepAverages()).thenReturn(Optional.of(interval));
 

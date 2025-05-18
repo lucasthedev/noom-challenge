@@ -1,8 +1,7 @@
 package com.noom.interview.sleep.api.controllers;
 
 import com.noom.interview.sleep.api.request.WokeUpSleepRequest;
-import com.noom.interview.sleep.api.response.SleepRangeResponse;
-import com.noom.interview.sleep.domain.Sleep;
+import com.noom.interview.sleep.api.response.SleepAveragesResponse;
 import com.noom.interview.sleep.repository.SleepFetchingAveragesRepository;
 import com.noom.interview.sleep.usecase.*;
 import org.springframework.http.HttpStatus;
@@ -11,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class SleepController {
@@ -19,15 +19,18 @@ public class SleepController {
     private final WokeUpSleepUseCase wokeUpSleepUseCase;
     private final FetchSleepAveragesUseCase fetchSleepAveragesUseCase;
     private final FetchSleepMorningFeelingFrequencyUseCase fetchSleepMorningFeelingFrequencyUseCase;
+    private final GetBedWakeAveragesUseCase getBedWakeAveragesUseCase;
 
     public SleepController(CreateSleepUseCase createSleepUseCase,
                            WokeUpSleepUseCase wokeUpSleepUseCase,
                            FetchSleepAveragesUseCase fetchSleepAveragesUseCase,
-                           FetchSleepMorningFeelingFrequencyUseCase fetchSleepMorningFeelingFrequencyUseCase) {
+                           FetchSleepMorningFeelingFrequencyUseCase fetchSleepMorningFeelingFrequencyUseCase,
+                           GetBedWakeAveragesUseCase getBedWakeAveragesUseCase) {
         this.createSleepUseCase = createSleepUseCase;
         this.wokeUpSleepUseCase = wokeUpSleepUseCase;
         this.fetchSleepAveragesUseCase = fetchSleepAveragesUseCase;
         this.fetchSleepMorningFeelingFrequencyUseCase = fetchSleepMorningFeelingFrequencyUseCase;
+        this.getBedWakeAveragesUseCase = getBedWakeAveragesUseCase;
     }
 
     @PostMapping(value = "/register-sleep",
@@ -49,8 +52,17 @@ public class SleepController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getSleepAverages() {
         SleepFetchingAveragesRepository.Data dataAverages = fetchSleepAveragesUseCase.execute();
+        GetBedWakeAveragesUseCase.BedWakeAverages bedWakeAverages = getBedWakeAveragesUseCase.execute().get();
 
-        return ResponseEntity.status(HttpStatus.OK).body(dataAverages.toResponse(dataAverages));
+        var response = new SleepAveragesResponse(
+                dataAverages.getStartDate(),
+                dataAverages.getEndDate(),
+                dataAverages.getAvgTimeInBedHours(),
+                bedWakeAverages.getAvgBedTime(),
+                bedWakeAverages.getAvgWakeTime()
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping(value = "/sleep-frequency",

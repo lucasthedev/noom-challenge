@@ -35,9 +35,7 @@ public class SleepFetchingAveragesRepositoryTest {
 
         when(jdbcTemplate.query(anyString(), (ResultSetExtractor<Object>) any()))
                 .thenReturn(Optional.of(new SleepFetchingAveragesRepository.Data(minDate, maxDate,
-                        100L,
-                        LocalTime.now(),
-                        LocalTime.now())));
+                        100L)));
 
         Optional<SleepFetchingAveragesRepository.Data> result = repository.getSleepAverages();
 
