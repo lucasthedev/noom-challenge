@@ -1,6 +1,8 @@
 package com.noom.interview.sleep.repository;
 
+import com.noom.interview.sleep.api.response.SleepRangeResponse;
 import com.noom.interview.sleep.repository.queries.AverageQuery;
+import lombok.Getter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -50,11 +52,11 @@ public class SleepFetchingAveragesRepository {
     }
 
     public static class Data {
-        private  LocalDate startDate;
+        private LocalDate startDate;
         private LocalDate endDate;
-        private final double avgTimeInBedHours;
-        private final LocalTime avgBedTime;
-        private final LocalTime avgWakeUpTime;
+        private double avgTimeInBedHours;
+        private LocalTime avgBedTime;
+        private LocalTime avgWakeUpTime;
 
         public Data(LocalDate startDate, LocalDate endDate,
                     double avgTimeInBedHours,
@@ -67,10 +69,34 @@ public class SleepFetchingAveragesRepository {
             this.avgWakeUpTime = avgWakeUpTime;
         }
 
-        public LocalDate getStartDate() { return startDate; }
-        public LocalDate getEndDate() { return endDate; }
-        public double getAvgTimeInBedHours() { return avgTimeInBedHours; }
-        public LocalTime getAvgBedTime() { return avgBedTime; }
-        public LocalTime getAvgWakeUpTime() { return avgWakeUpTime; }
+        public SleepRangeResponse toResponse(Data data) {
+            return new SleepRangeResponse(
+                    data.getStartDate(),
+                    data.getEndDate(),
+                    data.getAvgTimeInBedHours(),
+                    data.getAvgBedTime(),
+                    data.getAvgWakeUpTime()
+            );
+        }
+
+        public LocalDate getStartDate() {
+            return startDate;
+        }
+
+        public double getAvgTimeInBedHours() {
+            return avgTimeInBedHours;
+        }
+
+        public LocalDate getEndDate() {
+            return endDate;
+        }
+
+        public LocalTime getAvgBedTime() {
+            return avgBedTime;
+        }
+
+        public LocalTime getAvgWakeUpTime() {
+            return avgWakeUpTime;
+        }
     }
 }

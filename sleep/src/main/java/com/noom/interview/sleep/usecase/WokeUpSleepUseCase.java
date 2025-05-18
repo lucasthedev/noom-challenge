@@ -21,7 +21,7 @@ public class WokeUpSleepUseCase {
             final Sleep sleep = sleepRepository.getSleep(id);
 
             Arrays.stream(SleepFeeling.values())
-                    .filter(sleepFeeling -> sleepFeeling.name().equalsIgnoreCase(morningFeeling))
+                    .filter(sleepFeeling -> sleepFeeling.name().equals(morningFeeling))
                     .findFirst()
                     .ifPresentOrElse(
                             sleepFeeling -> sleep.setMorningFeeling(sleepFeeling.name()),
@@ -30,8 +30,6 @@ public class WokeUpSleepUseCase {
                             }
                     );
 
-
-            sleep.setMorningFeeling(morningFeeling);
             sleep.updateSleep(sleep);
 
             return sleepRepository.updateSleep(sleep);

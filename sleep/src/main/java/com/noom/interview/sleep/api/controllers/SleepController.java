@@ -2,11 +2,9 @@ package com.noom.interview.sleep.api.controllers;
 
 import com.noom.interview.sleep.api.request.WokeUpSleepRequest;
 import com.noom.interview.sleep.api.response.SleepRangeResponse;
+import com.noom.interview.sleep.domain.Sleep;
 import com.noom.interview.sleep.repository.SleepFetchingAveragesRepository;
-import com.noom.interview.sleep.usecase.CreateSleepUseCase;
-import com.noom.interview.sleep.usecase.FetchSleepAveragesUseCase;
-import com.noom.interview.sleep.usecase.FetchSleepMorningFeelingFrequencyUseCase;
-import com.noom.interview.sleep.usecase.WokeUpSleepUseCase;
+import com.noom.interview.sleep.usecase.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -50,15 +48,9 @@ public class SleepController {
     @GetMapping(value = "/sleep-averages",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getSleepAverages() {
-        SleepFetchingAveragesRepository.Data dateInterval = fetchSleepAveragesUseCase.execute();
+        SleepFetchingAveragesRepository.Data dataAverages = fetchSleepAveragesUseCase.execute();
 
-        SleepRangeResponse sleepRangeResponse = new SleepRangeResponse(dateInterval.getStartDate(),
-                dateInterval.getEndDate(),
-                dateInterval.getAvgTimeInBedHours(),
-                dateInterval.getAvgBedTime(),
-                dateInterval.getAvgWakeUpTime());
-
-        return ResponseEntity.status(HttpStatus.OK).body(sleepRangeResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(dataAverages.toResponse(dataAverages));
     }
 
     @GetMapping(value = "/sleep-frequency",
