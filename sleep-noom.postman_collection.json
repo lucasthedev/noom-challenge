@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "a513e886-ca46-44eb-84d9-0597b250551f",
+		"name": "sleep-noom",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7097804"
+	},
+	"item": [
+		{
+			"name": "Register Sleep",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/register-sleep",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"register-sleep"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Wake up",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"morningFeeling\": \"GOOD\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/woke-up-sleep/4f32504f-bf32-41f6-b9ba-8a5e4a1bd9c2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"woke-up-sleep",
+						"4f32504f-bf32-41f6-b9ba-8a5e4a1bd9c2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Avarages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/sleep-averages",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sleep-averages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sleep Frequency",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/sleep-frequency",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sleep-frequency"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sleep By id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/sleep/4f32504f-bf32-41f6-b9ba-8a5e4a1bd9c2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sleep",
+						"4f32504f-bf32-41f6-b9ba-8a5e4a1bd9c2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
