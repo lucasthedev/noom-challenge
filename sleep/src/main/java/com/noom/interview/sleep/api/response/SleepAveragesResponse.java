@@ -1,10 +1,12 @@
 package com.noom.interview.sleep.api.response;
 
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class SleepRangeResponse {
+public class SleepAveragesResponse {
 
     private  LocalDate startDate;
     private LocalDate endDate;
@@ -12,13 +14,15 @@ public class SleepRangeResponse {
     private final LocalTime avgBedTime;
     private final LocalTime avgWakeUpTime;
 
-    public SleepRangeResponse(LocalDate startDate, LocalDate endDate,
-                              double avgTimeInBedHours,
-                              LocalTime avgBedTime,
-                              LocalTime avgWakeUpTime) {
+    public SleepAveragesResponse(LocalDate startDate, LocalDate endDate,
+                                 double avgTimeInBedHours,
+                                 LocalTime avgBedTime,
+                                 LocalTime avgWakeUpTime) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.avgTimeInBedHours = avgTimeInBedHours;
+        this.avgTimeInBedHours = BigDecimal.valueOf(avgTimeInBedHours)
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
         this.avgBedTime = avgBedTime;
         this.avgWakeUpTime = avgWakeUpTime;
     }
