@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
-public class FetchSleepMorningFeelingFrequencyUseCase {
+public class GetSleepMorningFeelingFrequencyUseCase {
     private final SleepFetchMorningFeelingFrequencyRepository sleepFetchMorningFeelingFrequencyRepository;
 
-    public FetchSleepMorningFeelingFrequencyUseCase(SleepFetchMorningFeelingFrequencyRepository sleepFetchMorningFeelingFrequencyRepository) {
+    public GetSleepMorningFeelingFrequencyUseCase(SleepFetchMorningFeelingFrequencyRepository sleepFetchMorningFeelingFrequencyRepository) {
         this.sleepFetchMorningFeelingFrequencyRepository = sleepFetchMorningFeelingFrequencyRepository;
     }
 

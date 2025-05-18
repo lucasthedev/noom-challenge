@@ -5,10 +5,10 @@ import com.noom.interview.sleep.repository.SleepFetchingAveragesRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FetchSleepAveragesUseCase {
+public class GetSleepAveragesUseCase {
     private final SleepFetchingAveragesRepository sleepFetchingAveragesRepository;
 
-    public FetchSleepAveragesUseCase(SleepFetchingAveragesRepository sleepFetchingAveragesRepository) {
+    public GetSleepAveragesUseCase(SleepFetchingAveragesRepository sleepFetchingAveragesRepository) {
         this.sleepFetchingAveragesRepository = sleepFetchingAveragesRepository;
     }
 
