@@ -1,6 +1,7 @@
 package com.noom.interview.sleep.api.handler;
 
 import com.noom.interview.sleep.exceptions.SleepRangeNotFoundException;
+import com.noom.interview.sleep.exceptions.SleepRecordNotFoundException;
 import com.noom.interview.sleep.exceptions.WokeUpSleepException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,11 @@ public class RestResponseEntityExceptionHandler {
 
     @ExceptionHandler({SleepRangeNotFoundException.class})
     public ResponseEntity<Object> handleSleepRangeNotFoundException(Exception e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({SleepRecordNotFoundException.class})
+    public ResponseEntity<Object> handleSleepRecordNotFoundException(Exception e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

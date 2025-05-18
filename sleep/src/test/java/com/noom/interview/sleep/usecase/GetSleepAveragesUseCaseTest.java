@@ -5,21 +5,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class FetchSleepAveragesUseCaseTest {
+public class GetSleepAveragesUseCaseTest {
     private SleepFetchingAveragesRepository repository;
-    private FetchSleepAveragesUseCase useCase;
+    private GetSleepAveragesUseCase useCase;
 
     @BeforeEach
     void setUp() {
         repository = mock(SleepFetchingAveragesRepository.class);
-        useCase = new FetchSleepAveragesUseCase(repository);
+        useCase = new GetSleepAveragesUseCase(repository);
     }
 
     @Test
