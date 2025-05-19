@@ -39,7 +39,7 @@ public class GetSleepAveragesUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenDotNotExists() {
-        when(repository.getSleepAverages()).thenReturn(Optional.empty());
+        when(repository.getSleepAverages()).thenReturn(Optional.of(new SleepFetchingAveragesRepository.Data(null,null,0)));
 
         RuntimeException ex = assertThrows(RuntimeException.class, () -> useCase.execute());
         assertEquals("No sleep data found in the last 30 days", ex.getMessage());

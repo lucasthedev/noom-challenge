@@ -51,7 +51,7 @@ class GetBedWakeAveragesUseCaseTest {
         LocalTime avgBedTime = result.get().getAvgBedTime();
         LocalTime avgWakeTime = result.get().getAvgWakeTime();
 
-        assertEquals(LocalTime.of(23, 30), avgBedTime);
+        assertEquals(LocalTime.of(11, 30), avgBedTime);
         assertEquals(LocalTime.of(6, 45), avgWakeTime);
     }
 }

@@ -13,7 +13,12 @@ public class GetSleepAveragesUseCase {
     }
 
     public SleepFetchingAveragesRepository.Data execute() {
-        return sleepFetchingAveragesRepository.getSleepAverages()
-                .orElseThrow(() -> new SleepRangeNotFoundException("No sleep data found in the last 30 days"));
+        var sleepAverages = sleepFetchingAveragesRepository.getSleepAverages().get();
+
+        if (sleepAverages.getStartDate() == null || sleepAverages.getEndDate() == null) {
+            throw new SleepRangeNotFoundException("No sleep data found in the last 30 days");
+        }
+
+        return sleepAverages;
     }
 }

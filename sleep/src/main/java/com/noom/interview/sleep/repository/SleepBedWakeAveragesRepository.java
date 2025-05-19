@@ -5,6 +5,7 @@ import com.noom.interview.sleep.repository.queries.WakeTimeQuery;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,6 +24,9 @@ public class SleepBedWakeAveragesRepository {
 
     public List<LocalDateTime> fetchWakeTimes() {
         return jdbcTemplate.query(WakeTimeQuery.WAKE_TIME_QUERY,
-                (r, i) -> r.getTimestamp("end_bed_time").toLocalDateTime());
+                (r, i) -> {
+                    Timestamp ts = r.getTimestamp("end_bed_time");
+                    return ts != null ? ts.toLocalDateTime() : null;
+                });
     }
 }
