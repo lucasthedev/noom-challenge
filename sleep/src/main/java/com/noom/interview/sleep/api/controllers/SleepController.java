@@ -2,6 +2,7 @@ package com.noom.interview.sleep.api.controllers;
 
 import com.noom.interview.sleep.api.request.WokeUpSleepRequest;
 import com.noom.interview.sleep.api.response.SleepAveragesResponse;
+import com.noom.interview.sleep.api.response.SleepResponse;
 import com.noom.interview.sleep.repository.SleepFetchingAveragesRepository;
 import com.noom.interview.sleep.usecase.*;
 import org.springframework.http.HttpStatus;
@@ -10,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-
-import static org.springframework.web.servlet.function.ServerResponse.status;
 
 @RestController
 public class SleepController {
@@ -81,8 +80,9 @@ public class SleepController {
     @GetMapping(value = "/sleep/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getSleepById(@PathVariable String id) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(getSleepByIdUseCase.execute(id));
+        var sleep = getSleepByIdUseCase.execute(id);
+        var response = new SleepResponse(sleep);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 }
