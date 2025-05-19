@@ -3,13 +3,11 @@ package com.noom.interview.sleep.usecase;
 import com.noom.interview.sleep.repository.SleepBedWakeAveragesRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
 @Service
 public class GetBedWakeAveragesUseCase {
@@ -21,7 +19,7 @@ public class GetBedWakeAveragesUseCase {
 
     public Optional<BedWakeAverages> execute() {
         List<LocalDateTime> bedTimes = repository.fetchBedTimes();
-        List<java.time.LocalDateTime> wakeTimes = repository.fetchWakeTimes();
+        List<LocalDateTime> wakeTimes = repository.fetchWakeTimes();
 
         if (bedTimes.isEmpty() || wakeTimes.isEmpty()) {
             return Optional.empty();
@@ -36,19 +34,6 @@ public class GetBedWakeAveragesUseCase {
                 .filter(Objects::nonNull)
                 .mapToInt(dt -> dt.getHour() * 60 + dt.getMinute())
                 .average().orElse(0);
-
-        double avgBedDuration = IntStream.range(0, Math.min(bedTimes.size(), wakeTimes.size()))
-                .mapToLong(i -> {
-                    LocalDateTime bed = bedTimes.get(i);
-                    LocalDateTime wake = wakeTimes.get(i);
-                    if (bed != null && wake != null) {
-                        return Duration.between(bed, wake).toMinutes();
-                    }
-                    return 0;
-                })
-                .filter(min -> min > 0)
-                .average()
-                .orElse(0);
 
         LocalTime avgBedTime = LocalTime.of((int) (avgBedMinutes / 60), (int) (avgBedMinutes % 60));
         LocalTime avgWakeTime = LocalTime.of((int) (avgWakeMinutes / 60) % 24, (int) (avgWakeMinutes % 60));

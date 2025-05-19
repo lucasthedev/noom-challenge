@@ -46,7 +46,11 @@ public class Sleep {
 
     public void updateSleep(Sleep sleep) {
         this.timeInBedEnd =  LocalDateTime.now();
-        this.totalTimeInBed = Duration.between(this.timeInBedStart, this.timeInBedEnd);
+        if (this.timeInBedEnd.isBefore(this.timeInBedStart)) {
+            this.totalTimeInBed = Duration.ZERO;
+        } else {
+            this.totalTimeInBed = Duration.between(this.timeInBedStart, this.timeInBedEnd);
+        }
         this.updatedAt = Instant.now();
     }
 
